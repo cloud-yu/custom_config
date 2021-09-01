@@ -61,18 +61,26 @@ function Start-Fhlogin {
 # (Get-PSProvider 'FileSystem').Home = $HOME
 # Set-Location $HOME
 
-# Personlize console
-$Host.UI.RawUI.WindowTitle = "Windows Powershell " + $Host.Version.Major;
-Write-Host -ForegroundColor Green ("`n`t`t`t Welcome to Windows Powershell {0}`n`n" -f $host.Version.Major)
-
 ##set exec policy
 # Set-ExecutionPolicy Unrestricted
 
 ##Disable the audio beep when user pressed backspace in the powershell console
 Set-PSReadLineOption -BellStyle None
 
+if ( -not $(Get-Module -ListAvailable -Name posh-git)) {
+    Install-Module posh-git -Scope CurrentUser
+}
+
+if ( -not $(Get-Module -ListAvailable -Name oh-my-posh)) {
+    Install-Module oh-my-posh -Scope CurrentUser
+}
+
 ##Powershell support autoload module when using cmdlets from an installed module after version 3.0
 # Import-Module posh-git
 # Import-Module oh-my-posh
+
+# Personlize console
+$Host.UI.RawUI.WindowTitle = "Windows Powershell " + $Host.Version.Major;
+Write-Host -ForegroundColor Green ("`n`t`t`t Welcome to Windows Powershell {0}`n`n" -f $host.Version.Major)
 
 Set-Theme Paradox
