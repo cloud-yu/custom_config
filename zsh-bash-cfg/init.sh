@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 SCRIPT_PWD=$(cd "$(dirname "$0")" && pwd)
 
 echo "${SCRIPT_PWD}"
