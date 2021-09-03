@@ -79,8 +79,39 @@ if ( -not $(Get-Module -ListAvailable -Name oh-my-posh)) {
 # Import-Module posh-git
 # Import-Module oh-my-posh
 
+$PSReadLineOptions = @{
+    PredictionSource              = "History"
+    HistoryNoDuplicates           = $true
+    HistorySearchCursorMovesToEnd = $true
+    Colors                        = @{
+        Command            = [System.ConsoleColor]::Cyan
+        Number             = [System.ConsoleColor]::DarkGreen
+        Member             = [System.ConsoleColor]::DarkMagenta
+        Operator           = [System.ConsoleColor]::Gray
+        Type               = [System.ConsoleColor]::DarkRed
+        Variable           = [System.ConsoleColor]::DarkYellow
+        Parameter          = [System.ConsoleColor]::DarkGreen
+        ContinuationPrompt = [System.ConsoleColor]::Gray
+        Default            = [System.ConsoleColor]::White
+        Emphasis           = [System.ConsoleColor]::DarkMagenta
+        Error              = [System.ConsoleColor]::DarkRed
+        Selection          = [System.ConsoleColor]::Gray
+        Comment            = [System.ConsoleColor]::DarkCyan
+        Keyword            = [System.ConsoleColor]::DarkRed
+        String             = [System.ConsoleColor]::DarkGray
+        InlinePrediction   = [System.ConsoleColor]::DarkGray
+    }
+}
+Set-PSReadLineOption @PSReadLineOptions
+
+Set-PSReadLineKeyHandler -Key Tab -Function Complete  # 设置 tab 键补全
+Set-PSReadLineKeyHandler -Key "Ctrl+d" -Function MenuComplete  # 设置 ctrl+d 为菜单补全和 Intellisense
+Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo  # 设置 ctrl+z 为撤销
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward  # 设置向上键位搜索历史记录
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward  #设置下键位前向搜索历史记录
+
+Set-PoshPrompt Paradox
+
 # Personlize console
 $Host.UI.RawUI.WindowTitle = "Windows Powershell " + $Host.Version.Major;
 Write-Host -ForegroundColor Green ("`n`t`t`t Welcome to Windows Powershell {0}`n`n" -f $host.Version.Major)
-
-Set-Theme Paradox
