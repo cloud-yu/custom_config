@@ -11,8 +11,12 @@
 [System.Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding(65001)
 $OutputEncoding = [System.Console]::OutputEncoding
 
-##reate alias
-# New-Alias -Name pip -Value pip
+## create alias
+## you can use New-Alias / Set-Alias to set an alias.
+## diffrence between two commands: when set an alias with exsiting name, Set-Alias will replace it without notification
+## New-Alias will give a notification and keep the old alias.
+## so use New-Alias when u want creat a new alias, use Set-Alias to modify an alias.
+New-Alias -Name vim -Value "D:\Program Files\Notepad++\notepad++.exe"
 
 ##Create function
 <#
@@ -67,17 +71,14 @@ function Start-Fhlogin {
 ##Disable the audio beep when user pressed backspace in the powershell console
 Set-PSReadLineOption -BellStyle None
 
-if ( -not $(Get-Module -ListAvailable -Name posh-git)) {
-    Install-Module posh-git -Scope CurrentUser
-}
-
-if ( -not $(Get-Module -ListAvailable -Name oh-my-posh)) {
-    Install-Module oh-my-posh -Scope CurrentUser
-}
-
 ##Powershell support autoload module when using cmdlets from an installed module after version 3.0
 # Import-Module posh-git
 # Import-Module oh-my-posh
+Import-Module DirColors
+
+$ConfigPath = Split-Path $PROFILE.CurrentUserAllHosts -Parent
+Update-FormatData -PrependPath (Join-Path -Path $ConfigPath -ChildPath "FileInfo.Format.ps1xml")
+Set-PoshPrompt (Join-Path -Path $ConfigPath -ChildPath ".mytheme.p10k.rainbow.json")
 
 $PSReadLineOptions = @{
     PredictionSource              = "History"
@@ -106,12 +107,29 @@ Set-PSReadLineOption @PSReadLineOptions
 
 Set-PSReadLineKeyHandler -Key Tab -Function Complete  # 设置 tab 键补全
 Set-PSReadLineKeyHandler -Key "Ctrl+d" -Function MenuComplete  # 设置 ctrl+d 为菜单补全和 Intellisense
+Set-PSReadLineKeyHandler -Key "Ctrl+f" -Function EndOfHistory  # 设置ctrl+f 停止历史记录补全
 Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo  # 设置 ctrl+z 为撤销
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward  # 设置向上键位搜索历史记录
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward  #设置下键位前向搜索历史记录
+Set-PSReadLineKeyHandler -Key Alt+d -Function ShellBackwardKillWord
+Set-PSReadLineKeyHandler -Key Alt+b -Function ShellBackwardWord
+Set-PSReadLineKeyHandler -Key Alt+f `
+    -BriefDescription ForwardCharAndAcceptNextSuggestionWord `
+    -LongDescription "Move cursor one character to the right in the current editing line and accept the next word in suggestion when it's at the end of current editing line" `
+    -ScriptBlock {
+    param($key, $arg)
 
-Set-PoshPrompt Paradox
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
+    if ($cursor -lt $line.Length) {
+        [Microsoft.PowerShell.PSConsoleReadLine]::ShellForwardWord($key, $arg)
+    }
+    else {
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg)
+    }
+}
 # Personlize console
 $Host.UI.RawUI.WindowTitle = "Windows Powershell " + $Host.Version.Major;
 Write-Host -ForegroundColor Green ("`n`t`t`t Welcome to Windows Powershell {0}`n`n" -f $host.Version.Major)
