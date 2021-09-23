@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <Controls>
+    <Control>
+      <Name>DirectoryGroupFormat</Name>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Frame><RightIndent>8</RightIndent></Frame>
+              <Text>Directory: </Text>
+              <ExpressionBinding>
+                <ScriptBlock>($_.PSParentPath -split '::')[1]</ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </Control>
+  </Controls>
+  <ViewDefinitions>
+    <View>
+      <Name>mygciview</Name>
+      <ViewSelectedBy>
+        <TypeName>System.IO.DirectoryInfo</TypeName>
+        <TypeName>System.IO.FileInfo</TypeName>
+      </ViewSelectedBy>
+      <GroupBy>
+        <PropertyName>PSParentPath</PropertyName>
+        <CustomControlName>DirectoryGroupFormat</CustomControlName>
+      </GroupBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Mode</Label>
+            <Width>9</Width>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>LastWriteTime</Label>
+            <Width>25</Width>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>CreationTime</Label>
+            <Width>25</Width>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Length</Label>
+            <Width>14</Width>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Name</Label>
+            <Alignment>Left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <Wrap />
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>ModeWithoutHardLink</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastWriteTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>CreationTime</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if (-not $_.PSIsContainer) {
+                      DisplayInBytes $_.Length
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Name</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

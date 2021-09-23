@@ -20,7 +20,7 @@ function Start-Fhlogin {
     param (
         $Uri = 'http://10.101.18.1:8008/portal.cgi',
         $Username = 'yuyun',
-        $Passwd = '0211004565Fh'
+        $Passwd = 'Fh0211004565'
     )
 
     $Body = @{
@@ -32,4 +32,18 @@ function Start-Fhlogin {
     $ISO = [System.Text.Encoding]::GetEncoding('iso-8859-1')
     $UTF8 = [System.Text.Encoding]::UTF8
     Write-Host $UTF8.GetString($ISO.GetBytes($resp))
+}
+
+function DisplayInBytes {
+    [CmdletBinding()]
+    param (
+        $filesize
+    )
+    $unit = "B", "KB", "MB", "GB", "TB", "PB"
+    $index = 0
+    while ($filesize -ge 1KB) {
+        $filesize = $filesize / 1KB
+        $index++
+    }
+    "{0:N1} {1}" -f $filesize, $unit[$index]
 }
