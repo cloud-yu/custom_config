@@ -118,7 +118,8 @@ endfunc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 nmap <leader>w :w!<cr>
-nmap <leader>f :find<cr>
+nmap <leader>f :find 
+nmap <leader>sw :w !sudo tee %<cr>
 
 " 映射全选+复制 ctrl+a
 map <C-A> ggVGY
