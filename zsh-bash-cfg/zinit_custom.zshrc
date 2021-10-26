@@ -45,6 +45,9 @@ zinit wait lucid light-mode for \
 	as"completion" \
 		OMZP::docker/_docker 
 
+zinit wait lucid for \
+	PZTM::completion
+
 zinit wait lucid light-mode for \
 	atload"_zsh_autosuggest_start" \
 		zsh-users/zsh-autosuggestions \
