@@ -22,7 +22,7 @@ ZINIT="${HOME}"/.zinit/bin/zinit.zsh
 ## install zinit if not exist
 if [ ! -f "${ZINIT}" ]; then
 	if [ -x $(which git) ]; then
-		mkdir "${HOME}"/.zinit && git clone https://github.com/zdharma/zinit.git "${HOME}"/.zinit/bin
+		mkdir "${HOME}"/.zinit && git clone https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
 	else
 		echo "ERROR: please install git before installation!!"
 		exit
@@ -32,14 +32,14 @@ fi
 # load zinit
 source "${ZINIT}"
 
-zinit load zdharma/history-search-multi-word
+zinit load zdharma-continuum/history-search-multi-word
 
 zinit ice depth"1"
 zinit light romkatv/powerlevel10k
 
 zinit wait lucid light-mode for \
 	atinit"zicompinit; zicdreplay" \
-		zdharma/fast-syntax-highlighting \
+		zdharma-continuum/fast-syntax-highlighting \
 	atinit \
 		rupa/z \
 	as"completion" \
