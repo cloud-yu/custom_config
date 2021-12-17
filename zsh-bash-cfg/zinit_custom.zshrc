@@ -8,6 +8,9 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
+# change WORDCHARS 
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
 # set dir stack
 DIRSTACKSIZE=10
 setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups cdablevars
@@ -15,6 +18,12 @@ setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups cdablevars
 # disable correction
 unsetopt correctall
 unsetopt correct
+
+# bindkeys
+bindkey '\e[3~' delete-char  # Del
+bindkey '\e[2~' overwrite-mode  # Ins
+bindkey '\eOH' beginning-of-line  # Home in editor
+bindkey '\eOF' end-of-line  # End in editor
 
 # init zinit
 ZINIT="${HOME}"/.zinit/bin/zinit.zsh
