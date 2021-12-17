@@ -7,7 +7,7 @@
 # Created Time: Fri 17 Dec 2021 02:38:57 PM CST
 #########################################################################
 CPWD=$(cd $(dirname $0) && pwd)
-if [[ ! -d "${HOME}"/.tmux/plugins) ]]; then
+if [[ ! -d "${HOME}"/.tmux/plugins ]]; then
   mkdir -p "${HOME}"/.tmux/plugins
 fi
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+if [[ -x "$(which tmux)" ]]; then
+  tmux has-session -t vtty1 >/dev/null 2>&1
+  if [ $? -ne 0 ];then
+#	echo "can't find tmux session 'vtty1', create one"
+	tmux new-session -d -s vtty1
+  fi
+fi
