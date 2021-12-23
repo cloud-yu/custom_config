@@ -31,7 +31,7 @@ ZINIT="${HOME}"/.zinit/bin/zinit.zsh
 ## install zinit if not exist
 if [ ! -f "${ZINIT}" ]; then
 	if [ -x $(which git) ]; then
-		mkdir "${HOME}"/.zinit && git clone https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
+		mkdir -p "${HOME}"/.zinit && git clone https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
 	else
 		echo "ERROR: please install git before installation!!"
 		exit
@@ -41,18 +41,24 @@ fi
 # load zinit
 source "${ZINIT}"
 
-zinit load zdharma-continuum/history-search-multi-word
-
 zinit ice depth"1"
 zinit light romkatv/powerlevel10k
 
+
 zinit wait lucid light-mode for \
+	atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' atload"
+	zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
+		trapd00r/LS_COLORS \
+	atload \
+		zdharma-continuum/history-search-multi-word \
 	atinit"zicompinit; zicdreplay" \
 		zdharma-continuum/fast-syntax-highlighting \
 	atinit \
 		rupa/z \
 	as"completion" \
-		OMZP::docker/_docker 
+		OMZP::docker/_docker \
+	as"completion" \
+	    felipec/git-completion
 
 zinit wait lucid for \
 	PZTM::completion
