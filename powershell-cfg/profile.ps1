@@ -72,9 +72,14 @@ function Start-Fhlogin {
 Set-PSReadLineOption -BellStyle None
 
 ##Powershell support autoload module when using cmdlets from an installed module after version 3.0
+# Prepare
+# Install-Module posh-git, oh-my-posh, Terminal-Icons
+
+Import-Module Terminal-Icons
+
 # Import-Module posh-git
 # Import-Module oh-my-posh
-Import-Module DirColors
+
 
 $ConfigPath = Split-Path $PROFILE.CurrentUserAllHosts -Parent
 Update-FormatData -PrependPath (Join-Path -Path $ConfigPath -ChildPath "FileInfo.Format.ps1xml")
