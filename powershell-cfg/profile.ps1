@@ -16,7 +16,7 @@ $OutputEncoding = [System.Console]::OutputEncoding
 ## diffrence between two commands: when set an alias with exsiting name, Set-Alias will replace it without notification
 ## New-Alias will give a notification and keep the old alias.
 ## so use New-Alias when u want creat a new alias, use Set-Alias to modify an alias.
-New-Alias -Name vim -Value "D:\Program Files\Notepad++\notepad++.exe"
+# New-Alias -Name vim -Value "D:\Program Files\Notepad++\notepad++.exe"
 
 ##Create function
 <#
@@ -75,15 +75,18 @@ Set-PSReadLineOption -BellStyle None
 # Prepare
 # Install-Module posh-git, oh-my-posh, Terminal-Icons
 
-Import-Module Terminal-Icons
+
 
 # Import-Module posh-git
-# Import-Module oh-my-posh
+Import-Module oh-my-posh
+Import-Module script-module
+Import-Module Terminal-Icons
 
 
-$ConfigPath = Split-Path $PROFILE.CurrentUserAllHosts -Parent
-Update-FormatData -PrependPath (Join-Path -Path $ConfigPath -ChildPath "FileInfo.Format.ps1xml")
-Set-PoshPrompt (Join-Path -Path $ConfigPath -ChildPath ".mytheme.p10k.rainbow.json")
+# $ConfigPath = Split-Path $PROFILE.CurrentUserAllHosts -Parent
+# Update-FormatData -PrependPath (Join-Path -Path $ConfigPath -ChildPath "FileInfo.Format.ps1xml")
+# Set-PoshPrompt (Join-Path -Path $ConfigPath -ChildPath ".mytheme.p10k.rainbow.json")
+Set-PoshPrompt powerlevel10k_rainbow
 
 $PSReadLineOptions = @{
     PredictionSource              = "History"
