@@ -57,6 +57,7 @@ zinit wait lucid light-mode for \
 		rupa/z \
 	as"completion" \
 		OMZP::docker/_docker \
+		OMZP::docker-compose/_docker-compose \
 	as"completion" \
 	    felipec/git-completion
 
