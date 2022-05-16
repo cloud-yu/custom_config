@@ -28,3 +28,8 @@ fi
 if [ ! -d "${HOME}/.local/share" ]; then
     mkdir -p "${HOME}/.local/share"
 fi
+
+# source aliases files
+source "${HOME}"/.bash_aliases
+source "${HOME}"/.bash_scripts
+
