@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # options
 setopt completealiases
 setopt nocaseglob
@@ -67,7 +74,7 @@ zinit wait lucid for \
 zinit wait lucid light-mode for \
 	atload"_zsh_autosuggest_start" \
 		zsh-users/zsh-autosuggestions \
-	blockf atpull'zinit creinstall -q .' \
+		blockf atpull'zinit creinstall -q $(pwd)' \
 		zsh-users/zsh-completions
 
 
