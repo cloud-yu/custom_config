@@ -4,8 +4,8 @@ SCRIPT_PWD=$(cd "$(dirname "$0")" && pwd)
 echo "${SCRIPT_PWD}"
 
 # copy profile to $HOME
-cp custom.bash_aliases "${HOME}"/.bash_aliases
-cp custom.bash_scripts "${HOME}"/.bash_scripts
+cp "${SCRIPT_PWD}"/custom.bash_aliases "${HOME}"/.bash_aliases
+cp "${SCRIPT_PWD}"/custom.bash_scripts "${HOME}"/.bash_scripts
 
 if [[ -n "${BASH_VERSION}" ]]; then
     cp "${SCRIPT_PWD}"/custom.profile "${HOME}"/.profile
