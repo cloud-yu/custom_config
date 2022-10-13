@@ -61,8 +61,8 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-" 不要用空格代替制表符
-set noexpandtab
+" 用空格代替制表符
+set expandtab
 
 " 在行和段开始处使用制表符
 set smarttab
@@ -216,6 +216,9 @@ au InsertEnter * call InsertStatusLineColor(v:insertmode)
 au InsertEnter * hi statusline guibg=orange guifg=white
 au InsertLeave * hi StatusLine term=reverse ctermfg=grey gui=bold,reverse
 hi statusline guibg=black
+
+" 根据文件后缀类型，设置不同的缩进设置（默认缩进4空格，tab替代空格)
+autocmd FileType json,xml,css set sw=2 ts=2 sts=2
 
 
 " 设置配色方案
