@@ -27,6 +27,7 @@ unsetopt correctall
 unsetopt correct
 
 # bindkeys
+bindkey -e # Use emacs mode keyshortcut
 bindkey '\e[3~' delete-char  # Del
 bindkey '\e[2~' overwrite-mode  # Ins
 bindkey '\eOH' beginning-of-line  # Home in editor
