@@ -75,7 +75,7 @@ zinit wait lucid for \
 zinit wait lucid light-mode for \
 	atload"_zsh_autosuggest_start" \
 		zsh-users/zsh-autosuggestions \
-		blockf atpull'zinit creinstall -q $(pwd)' \
+		blockf atpull'zinit cuninstall $(pwd) && zinit creinstall -q $(pwd)' \
 		zsh-users/zsh-completions
 
 

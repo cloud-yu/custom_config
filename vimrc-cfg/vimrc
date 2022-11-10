@@ -1,10 +1,3 @@
-map <F9> :call SaveInputData()<CR>
-func! SaveInputData()
-	exec "tabnew"
-	exec 'normal "+gP'
-	exec "w! /tmp/input_data"
-endfunc
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""实用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -21,8 +14,6 @@ autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
 set completeopt=preview,menu
 "允许插件
 filetype plugin on
-"共享剪贴板
-set clipboard+=unnamed
 "从不备份
 set nobackup
 "make 运行
@@ -165,10 +156,9 @@ set completeopt=longest,menu
 
 "colorscheme torte
 "colorscheme murphy
-"colorscheme desert
-"colorscheme desert
+colorscheme desert
 "colorscheme elflord
-colorscheme ron
+"colorscheme ron
 
 "set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 "set termencoding=utf-8
@@ -328,6 +318,14 @@ func! Rungdb()
 	exec "w"
 	exec "!g++ % -g -o %<"
 	exec "!gdb ./%<"
+endfunc
+
+"F9 保存当前文件到临时文件
+map <F9> :call SaveInputData()<CR>
+func! SaveInputData()
+	exec "tabnew"
+	exec 'normal "+gP'
+	exec "w! /tmp/input_data"
 endfunc
 
 "NERDtee设定
