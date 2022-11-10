@@ -1,7 +1,12 @@
 # set/unset proxy
 function setProxy() {
-	wslIp=$(grep nameserver /etc/resolv.conf | cut -d' ' -f 2)
-	typeset -gx HTTP_PROXY="http://${wslIp}:10811"
+    if [[ $(uname -a | tr '[a-z]' '[A-Z]') =~ 'WSL' ]]; then
+        proxyIp=$(grep nameserver /etc/resolv.conf | cut -d' ' -f 2)
+        typeset -gx HTTP_PROXY="http://${proxyIp}:10811"
+    else
+        proxyIp='127.0.0.1'
+        typeset -gx HTTP_PROXY="http://${proxyIp}:10809"
+    fi
 	typeset -gx HTTPS_PROXY=${HTTP_PROXY}
 }
 
