@@ -14,3 +14,6 @@ function delProxy() {
 	unset HTTP_PROXY
 	unset HTTPS_PROXY
 }
+
+# report CWD using OSC 1337 protocol, originally implemented by iTerm.  used by tabby
+function precmd() { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
