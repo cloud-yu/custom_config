@@ -1,0 +1,11 @@
+[Unit]
+Description=New a tmux session backgroud a user login
+After=getty.target
+
+[Service]
+Type=forking
+ExecStart=tmux new-session -d -s vtty1 
+Restart=always
+
+[Install]
+WantedBy=default.target
