@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # options
 setopt completealiases
 setopt nocaseglob
@@ -54,30 +47,23 @@ zinit light romkatv/powerlevel10k
 
 
 zinit wait lucid light-mode for \
+    PZTM::completion \
 	atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' atload"
 	zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
 		trapd00r/LS_COLORS \
-	atload \
-		zdharma-continuum/history-search-multi-word \
-	atinit"zicompinit; zicdreplay" \
-		zdharma-continuum/fast-syntax-highlighting \
 	atinit \
 		rupa/z \
+	atload"_zsh_autosuggest_start" \
+		zsh-users/zsh-autosuggestions \
+		blockf atpull'zinit cuninstall $(pwd) && zinit creinstall -q $(pwd)' \
+		zsh-users/zsh-completions \
 	as"completion" \
 		OMZP::docker/_docker \
 		OMZP::docker-compose/_docker-compose \
 	as"completion" \
-	    felipec/git-completion
+	    felipec/git-completion \
+	atload \
+		zdharma-continuum/history-search-multi-word \
+	atinit"zicompinit; zicdreplay" \
+		zdharma-continuum/fast-syntax-highlighting
 
-zinit wait lucid for \
-	PZTM::completion
-
-zinit wait lucid light-mode for \
-	atload"_zsh_autosuggest_start" \
-		zsh-users/zsh-autosuggestions \
-		blockf atpull'zinit cuninstall $(pwd) && zinit creinstall -q $(pwd)' \
-		zsh-users/zsh-completions
-
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
