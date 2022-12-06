@@ -19,3 +19,10 @@ else
 fi
 
 cp "${CPWD}"/tmux.conf "${HOME}"/.tmux.conf
+
+# copy .service file to user's local directory
+if [[ ! -d "${HOME}"/.config/systemd/user ]]; then
+    mkdir -p "${HOME}"/.config/systemd/user
+fi
+cp "${CPWD}"/tmux-session.service "${HOME}"/.config/systemd/user/
+systemctl --user enable tmux-session.service --now
