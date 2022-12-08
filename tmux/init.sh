@@ -18,7 +18,7 @@ else
   echo "git clone https://github.com/tmux-plugins/tpm.git ~/.tmux/plugins/tpm" > ~/.tmux/plugins/tpm_install.txt
 fi
 
-cp "${CPWD}"/tmux.conf "${HOME}"/.tmux.conf
+ln -fs "${CPWD}"/tmux.conf "${HOME}"/.tmux.conf
 
 # copy .service file to user's local directory
 if [[ ! -d "${HOME}"/.config/systemd/user ]]; then
