@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # options
 setopt completealiases
 setopt nocaseglob
@@ -60,20 +53,24 @@ zinit wait lucid light-mode for \
 	zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
 		trapd00r/LS_COLORS \
 		rupa/z \
-    atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion);_zsh_autosuggest_start" \
-        zsh-users/zsh-autosuggestions \
     atload blockf atpull'!zinit cuninstall $(pwd)' atpull'zinit creinstall -q $(pwd)' \
         zsh-users/zsh-completions \
 	as"completion" nocompile id-as"docker-completion/_docker" is-snippet "${GH_RAW_URL}/docker/cli/master/contrib/completion/zsh/_docker" \
 		OMZP::docker-compose/_docker-compose \
 	as"completion" nocompile id-as"git-completion/_git" is-snippet "${GH_RAW_URL}/git/git/master/contrib/completion/git-completion.zsh" \
-	atload \
 		zdharma-continuum/history-search-multi-word \
-	atinit"zicompinit; zicdreplay" \
-		zdharma-continuum/fast-syntax-highlighting 
+	atload"fast-theme -q clean" \
+        zdharma-continuum/fast-syntax-highlighting \
+    atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); 
+        _zsh_autosuggest_start; zicompinit; zicdreplay" \
+        zsh-users/zsh-autosuggestions
 
+if [ -z "${TMUX}" ];then
+    function tabby_precmd() { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
+    add-zsh-hook -Uz precmd tabby_precmd
+fi
 
-function tabby_precmd() { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
-add-zsh-hook -Uz precmd tabby_precmd
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [ -n "${TMUX}" ];then
+    function refresh_tmux_env() { eval "$(tmux show-environment -s)" }
+    add-zsh-hook -Uz preexec refresh_tmux_env
+fi
