@@ -91,6 +91,43 @@ set fencs=ucs-bom,utf-8,gb18030,gbk,gb2312,cp936
 set langmenu=zh_CN.UTF-8
 set helplang=cn
 
+" tabline内容定制
+set tabline=%!MyTabLine()
+
+function! MyTabLine()
+    let s = ''
+    for i in range(tabpagenr('$'))
+        " select the highlighting group
+        if i + 1 == tabpagenr()
+            let s ..= '%#TabLineSel#'
+        else
+            let s..= '%#TabLine#'
+        endif
+
+        " set the tab page number
+        let s ..= '%' .. (i + 1) .. 'T'
+
+        " the label is made by MyTabLable()
+        let s ..= ' %{MyTabLabel(' .. (i + 1) ..')} '
+    endfor
+
+    " after the last tab fill with TabLineFill and reset tab page nr
+    let s ..= '%#TabLineFill#%T'
+
+    " right-align the label to close the current tab page
+    if tabpagenr('$') > 1
+        let s ..= '%=%TabLine#%999Xclose'
+    endif
+
+    return s
+endfunction
+
+function! MyTabLabel(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    return '[' . a:n . '] ' . fnamemodify(bufname(buflist[winnr - 1]), ':~')
+endfunction
+
 " 我的状态行显示的内容（包括文件类型和解码）
 "set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ %{&encoding}\ %c:%l/%L%)\  " 设置在状态行显示的信息
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容
