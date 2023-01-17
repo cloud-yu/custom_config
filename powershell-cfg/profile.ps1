@@ -8,7 +8,7 @@
 # 在终端使用 echo "中文测试" > test.txt 命令写文件，文件内容为utf8编码，保存编码为gb2312，
 # 默认打开会出现乱码
 ##
-[System.Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding(65001)
+# [System.Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding(65001)
 $OutputEncoding = [System.Console]::OutputEncoding
 
 ## create alias
@@ -16,7 +16,10 @@ $OutputEncoding = [System.Console]::OutputEncoding
 ## diffrence between two commands: when set an alias with exsiting name, Set-Alias will replace it without notification
 ## New-Alias will give a notification and keep the old alias.
 ## so use New-Alias when u want creat a new alias, use Set-Alias to modify an alias.
-# New-Alias -Name vim -Value "D:\Program Files\Notepad++\notepad++.exe"
+New-Alias -Name vim -Value "C:\Program Files\Sublime Text\sublime_text.exe"
+
+## create variable
+New-Variable -Name ONEDRIVE -Value "${HOME}\OneDrive"
 
 ##Create function
 <#
@@ -75,27 +78,58 @@ Set-PSReadLineOption -BellStyle None
 # Prepare
 # Install-Module posh-git, oh-my-posh, Terminal-Icons
 
+function loadModule {
+    [CmdletBinding()]
+    param (
+        [string[]]$ModuleColletion
+    )
 
+    begin {
+        Write-Verbose "Load modules...."
+    }
 
+    process {
+        foreach ($curModule in $ModuleColletion) {
+            Write-Verbose "load $curModule..."
+            Import-Module $curModule 2>&1 | Out-Null
+            if (-not $?) {
+                Install-Module $curModule
+                Import-Module $curModule
+            }
+        }
+    }
+
+    end {
+        Write-Verbose "Load modules done"
+    }
+}
+
+loadModule -ModuleColletion Az.Tools.Predictor, script-module, Terminal-Icons
 # Import-Module posh-git
-Import-Module oh-my-posh
-Import-Module script-module
-Import-Module Terminal-Icons
+# # Import-Module oh-my-posh
+# Import-Module Az.Tools.Predictor
+# Import-Module script-module
+# Import-Module Terminal-Icons
+# Import-Module syntax-highlighting
 
 
 # $ConfigPath = Split-Path $PROFILE.CurrentUserAllHosts -Parent
 # Update-FormatData -PrependPath (Join-Path -Path $ConfigPath -ChildPath "FileInfo.Format.ps1xml")
 # Set-PoshPrompt (Join-Path -Path $ConfigPath -ChildPath ".mytheme.p10k.rainbow.json")
-Set-PoshPrompt powerlevel10k_rainbow
+# Set-PoshPrompt powerlevel10k_rainbow   # old version,deprecated
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\powerlevel10k_rainbow.omp.json" | Invoke-Expression
+oh-my-posh completion powershell | Out-String | Invoke-Expression
 
 $PSReadLineOptions = @{
-    PredictionSource              = "History"
+    PredictionSource              = "HistoryAndPlugin"
+    PredictionViewStyle           = "InlineView"
     HistoryNoDuplicates           = $true
     HistorySearchCursorMovesToEnd = $true
+    ShowToolTips                  = $true
     Colors                        = @{
-        Command            = [System.ConsoleColor]::Cyan
-        Number             = [System.ConsoleColor]::DarkGreen
-        Member             = [System.ConsoleColor]::DarkMagenta
+        Command            = [System.ConsoleColor]::Green
+        Number             = [System.ConsoleColor]::Blue
+        Member             = [System.ConsoleColor]::Magenta
         Operator           = [System.ConsoleColor]::Gray
         Type               = [System.ConsoleColor]::DarkRed
         Variable           = [System.ConsoleColor]::DarkYellow
@@ -107,15 +141,15 @@ $PSReadLineOptions = @{
         Selection          = [System.ConsoleColor]::Gray
         Comment            = [System.ConsoleColor]::DarkCyan
         Keyword            = [System.ConsoleColor]::DarkRed
-        String             = [System.ConsoleColor]::DarkGray
+        String             = [System.ConsoleColor]::White
         InlinePrediction   = [System.ConsoleColor]::DarkGray
     }
 }
 Set-PSReadLineOption @PSReadLineOptions
 
-Set-PSReadLineKeyHandler -Key Tab -Function Complete  # 设置 tab 键补全
+Set-PSReadLineKeyHandler -Chord Tab -Function Complete  # 设置 tab 键补全
 Set-PSReadLineKeyHandler -Key "Ctrl+d" -Function MenuComplete  # 设置 ctrl+d 为菜单补全和 Intellisense
-Set-PSReadLineKeyHandler -Key "Ctrl+f" -Function EndOfHistory  # 设置ctrl+f 停止历史记录补全
+Set-PSReadLineKeyHandler -Key "Ctrl+e" -Function EndOfHistory  # 设置ctrl+e 停止历史记录补全
 Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo  # 设置 ctrl+z 为撤销
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward  # 设置向上键位搜索历史记录
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward  #设置下键位前向搜索历史记录
@@ -138,6 +172,18 @@ Set-PSReadLineKeyHandler -Key Alt+f `
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptNextSuggestionWord($key, $arg)
     }
 }
+
+# 启用 winget tab 补全功能
+Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
+    $Local:word = $wordToComplete.Replace('"', '""')
+    $Local:ast = $commandAst.ToString().Replace('"', '""')
+    winget complete --word="$Local:word" --commandline "$Local:ast" --position $cursorPosition | ForEach-Object {
+        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+}
+
 # Personlize console
 $Host.UI.RawUI.WindowTitle = "Windows Powershell " + $Host.Version.Major;
 Write-Host -ForegroundColor Green ("`n`t`t`t Welcome to Windows Powershell {0}`n`n" -f $host.Version.Major)
