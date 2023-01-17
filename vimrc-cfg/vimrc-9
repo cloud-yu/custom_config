@@ -222,7 +222,7 @@ au BufRead,BufNewFile *  setfiletype txt
 :inoremap ' ''<ESC>i
 
 
-def ClosePair(char: string): string
+def g:ClosePair(char: string): string
 	if getline('.')[col('.') - 1] == char
 		return "\<Right>"
 	else
@@ -302,7 +302,8 @@ def SetTitle()
 	#		call append(line(".")+7,"")
 	#	endif
     #新建文件后，自动定位到文件末尾
-    autocmd BufNewFile * normal G
+    # autocmd BufNewFile * normal G
+    normal G
 enddef
 #"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #键盘命令
