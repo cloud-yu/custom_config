@@ -34,4 +34,4 @@ source "${HOME}"/.bash_aliases
 source "${HOME}"/.bash_scripts
 
 # set default EDITOR environment variable
-declare -r EDITOR=vim
+declare -xr EDITOR=$(which vim)
