@@ -2,7 +2,7 @@
 function setProxy() {
     if [[ $(uname -a | tr '[a-z]' '[A-Z]') =~ 'WSL' ]]; then
         proxyIp=$(grep nameserver /etc/resolv.conf | cut -d' ' -f 2)
-        typeset -gx HTTP_PROXY="http://${proxyIp}:10811"
+        typeset -gx HTTP_PROXY="http://${proxyIp}:10808"
     else
         proxyIp='127.0.0.1'
         typeset -gx HTTP_PROXY="http://${proxyIp}:10809"

@@ -48,6 +48,7 @@ zinit light romkatv/powerlevel10k
 local GH_RAW_URL='https://raw.githubusercontent.com'
 
 zinit wait lucid light-mode for \
+    atload'fpath=(${fpath[@]#${0:a:h}/external/src})' \
         PZTM::completion \
 	atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' atload"
 	zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
