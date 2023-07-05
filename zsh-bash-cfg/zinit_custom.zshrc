@@ -1,6 +1,6 @@
 # options
 setopt completealiases
-setopt nocaseglob
+setopt nocaseglob nonomatch
 setopt sharehistory histignoredups appendhistory
 
 # set history
