@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 SCRIPT_PWD=$(cd "$(dirname "$0")" && pwd)
 
 # create symbol link instead copy file

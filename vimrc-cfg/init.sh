@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 SCRIPT_PWD=$(cd "$(dirname "$0")" && pwd)
 VER_INFO=$(vim --version | head -1)
 if [[ ${VER_INFO} =~ [[:alpha:][:blank:]\-]+([[:digit:]])\.[[:digit:]].+ ]]; then

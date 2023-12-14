@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 CPWD=$(cd $(dirname $0) && pwd)
 if [[ -x "${CPWD}"/vimrc-cfg/init.sh ]]; then 
   "${CPWD}"/vimrc-cfg/init.sh
