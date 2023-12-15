@@ -1,31 +1,3 @@
-# options
-setopt completealiases
-setopt nocaseglob nonomatch
-setopt sharehistory histignoredups appendhistory
-
-# set history
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.zsh_history
-
-# change WORDCHARS 
-WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-
-# set dir stack
-DIRSTACKSIZE=10
-setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups cdablevars
-
-# disable correction
-unsetopt correctall
-unsetopt correct
-
-# bindkeys
-bindkey -e # Use emacs mode keyshortcut
-bindkey '\e[3~' delete-char  # Del
-bindkey '\e[2~' overwrite-mode  # Ins
-bindkey '\eOH' beginning-of-line  # Home in editor
-bindkey '\eOF' end-of-line  # End in editor
-
 # init zinit
 ZINIT="${HOME}"/.zinit/bin/zinit.zsh
 
@@ -44,12 +16,11 @@ source "${ZINIT}"
 
 zinit ice depth"1"
 zinit light romkatv/powerlevel10k
+zinit snippet PZTM::completion
 
 local GH_RAW_URL='https://raw.githubusercontent.com'
 
 zinit wait lucid light-mode for \
-    atload'fpath=(${fpath[@]#${0:a:h}/external/src})' \
-        PZTM::completion \
 	atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' atload"
 	zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
 		trapd00r/LS_COLORS \
@@ -66,6 +37,38 @@ zinit wait lucid light-mode for \
         _zsh_autosuggest_start; zicompinit; zicdreplay" \
         zsh-users/zsh-autosuggestions
 
+# set history
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# change WORDCHARS 
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
+# set dir stack
+DIRSTACKSIZE=10
+setopt autopushd pushdminus pushdsilent pushdtohome pushdignoredups cdablevars
+
+# options
+setopt completealiases
+setopt nocaseglob nonomatch
+setopt sharehistory histignoredups appendhistory
+# unset pathdirs (this is set by PZTM)
+unsetopt pathdirs
+
+# disable correction
+unsetopt correctall
+unsetopt correct
+
+
+# bindkeys
+bindkey -e # Use emacs mode keyshortcut
+bindkey '\e[3~' delete-char  # Del
+bindkey '\e[2~' overwrite-mode  # Ins
+bindkey '\eOH' beginning-of-line  # Home in editor
+bindkey '\eOF' end-of-line  # End in editor
+
+# some other functions
 if [ -z "${TMUX}" ];then
     function tabby_precmd() { echo -n "\x1b]1337;CurrentDir=$(pwd)\x07" }
     add-zsh-hook -Uz precmd tabby_precmd
@@ -75,3 +78,4 @@ if [ -n "${TMUX}" ];then
     function refresh_tmux_env() { eval "$(tmux show-environment -s)" }
     add-zsh-hook -Uz preexec refresh_tmux_env
 fi
+
