@@ -33,8 +33,7 @@ zinit wait lucid light-mode for \
 		zdharma-continuum/history-search-multi-word \
 	atload"fast-theme -q clean" \
         zdharma-continuum/fast-syntax-highlighting \
-    atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); 
-        _zsh_autosuggest_start; zicompinit; zicdreplay" \
+    atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,underline'; _zsh_autosuggest_start; zicompinit; zicdreplay" \
         zsh-users/zsh-autosuggestions
 
 # set history
