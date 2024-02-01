@@ -7,7 +7,6 @@ if [ -n "${BASH_VERSION}" ]; then
     fi
 fi
 
-
 # set PATH so it include user's private bin if it exists
 if [ -d "${HOME}/bin" ]; then
     PATH="${HOME}/bin:${PATH}"
@@ -30,8 +29,9 @@ if [ ! -d "${HOME}/.local/share" ]; then
 fi
 
 # source aliases files
-source "${HOME}"/.bash_aliases
-source "${HOME}"/.bash_scripts
-
+for file in "${HOME}"/.bash_cfg/*.cfg; do
+    source "${file}"
+done
 # set default EDITOR environment variable
-declare -xr EDITOR=$(which vim)
+EDITOR=$(which vim)
+declare -xr EDITOR
