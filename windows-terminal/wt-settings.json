@@ -14,16 +14,30 @@
       "keys": "ctrl+shift+c"
     },
     {
-      "command": "find",
-      "keys": "ctrl+shift+f"
-    },
-    {
       "command": {
         "action": "splitPane",
         "split": "auto",
         "splitMode": "duplicate"
       },
       "keys": "alt+shift+d"
+    },
+    {
+      "command": "find",
+      "keys": "ctrl+shift+f"
+    },
+    {
+      "command": {
+        "action": "findMatch",
+        "direction": "next"
+      },
+      "keys": "f3"
+    },
+    {
+      "command": {
+        "action": "findMatch",
+        "direction": "prev"
+      },
+      "keys": "shift+f3"
     }
   ],
   "alwaysShowTabs": true,
@@ -31,7 +45,54 @@
   "copyFormatting": "none",
   "copyOnSelect": true,
   "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+  "disableAnimations": false,
+  "experimental.rendering.software": false,
   "initialPosition": "200,20",
+  "newTabMenu": [
+    {
+      "type": "folder",
+      "name": "WSL",
+      "icon": "C:\\Users\\yuyun\\Pictures\\icon\\icons8-remote-desktop-100.png",
+      "entries": [
+        {
+          "type": "profile",
+          "profile": "Ubuntu"
+        },
+        {
+          "type": "profile",
+          "profile": "NixOS"
+        }
+      ]
+    },
+    {
+      "type": "separator"
+    },
+    {
+      "type": "folder",
+      "name": "SSH",
+      "icon": "C:\\Users\\yuyun\\Pictures\\icon\\icons8-server-100.png",
+      "entries": [
+        {
+          "type": "profile",
+          "profile": "ArchLinux"
+        },
+        {
+          "type": "profile",
+          "profile": "Lahd"
+        },
+        {
+          "type": "profile",
+          "profile": "hk_rak"
+        }
+      ]
+    },
+    {
+      "type": "separator"
+    },
+    {
+      "type": "remainingProfiles"
+    }
+  ],
   "profiles": {
     "defaults": {
       "closeOnExit": "graceful",
@@ -40,17 +101,19 @@
       "font": {
         "face": "Cascadia Code PL"
       },
+      "intenseTextStyle": "all",
       "historySize": 9001,
-      "opacity": 75,
+      "opacity": 80,
       "padding": "5,5,5,5",
       "snapOnInput": true,
       "suppressApplicationTitle": true,
-      "useAcrylic": true
+      "useAcrylic": true,
+      "useAtlasEngine": false
     },
     "list": [
       {
         "font": {
-          "face": "Sarasa Term Slab SC Nerd Font"
+          "face": "SarasaTermSlabSC NerdFont"
         },
         "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
         "hidden": false,
@@ -73,8 +136,8 @@
         "colorScheme": "Oceanic Material",
         "commandline": "C:\\Windows\\system32\\wsl.exe -d Ubuntu",
         "font": {
-          "face": "CaskaydiaCove NF",
-          "size": 10,
+          "face": "CaskaydiaCove Nerd Font",
+          "size": 10.0,
           "weight": "semi-light"
         },
         "guid": "{b5282015-9916-4206-85aa-b1b2f94fc389}",
@@ -86,38 +149,65 @@
       {
         "colorScheme": "Night Owl",
         "font": {
-          "face": "Sarasa Term Slab SC Nerd Font"
+          "face": "SarasaTermSlabSC NerdFont"
         },
         "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-        "hidden": false,
+        "hidden": true,
         "name": "PowerShell7",
         "source": "Windows.Terminal.PowershellCore"
       },
       {
         "colorScheme": "Oceanic Material",
-        "commandline": "ssh bwh",
+        "commandline": "ssh -A bwh",
         "font": {
-          "face": "JetBrainsMono NF",
-          "size": 11
+          "face": "JetBrainsMono Nerd Font",
+          "size": 11.0
         },
         "guid": "{48418b0c-33e8-4c50-b3e8-e73f105f2d94}",
         "hidden": false,
         "icon": "C:\\Users\\yuyun\\Pictures\\icon\\icons8-archlinux.png",
         "name": "ArchLinux",
-        "opacity": 75
+        "opacity": 80
       },
       {
         "colorScheme": "Oceanic Material",
-        "commandline": "ssh lahd",
+        "commandline": "ssh -J hk -A lahd",
         "font": {
-          "face": "JetBrainsMono NF",
-          "size": 11
+          "face": "JetBrainsMono Nerd Font",
+          "size": 11.0
         },
         "guid": "{8fb6efd5-7778-4b33-ab09-b24d76e6f25c}",
         "hidden": false,
         "icon": "C:\\Users\\yuyun\\Pictures\\icon\\icons8-archlinux.png",
-        "name": "lahd",
-        "opacity": 75
+        "name": "Lahd",
+        "opacity": 80
+      },
+      {
+        "colorScheme": "Oceanic Material",
+        "commandline": "ssh -A hk",
+        "font": {
+          "face": "JetBrainsMono Nerd Font",
+          "size": 11.0,
+          "weight": "normal"
+        },
+        "guid": "{e81cd527-5290-4997-b193-f7c825d2f4b7}",
+        "hidden": false,
+        "icon": "C:\\Users\\yuyun\\Pictures\\icon\\ubuntu-icon.png",
+        "name": "hk_rak",
+        "startingDirectory": "~"
+      },
+      {
+        "antialiasingMode": "grayscale",
+        "colorScheme": "Night Owl",
+        "font": {
+          "face": "JetBrainsMono Nerd Font",
+          "size": 11.0,
+          "weight": "normal"
+        },
+        "guid": "{c397f356-5e7b-55bc-956b-8cb4b9762c26}",
+        "hidden": false,
+        "name": "NixOS",
+        "source": "Windows.Terminal.Wsl"
       }
     ]
   },
@@ -517,5 +607,6 @@
   "showTabsInTitlebar": true,
   "tabWidthMode": "titleLength",
   "theme": "dark",
+  "themes": [],
   "useAcrylicInTabRow": true
 }
