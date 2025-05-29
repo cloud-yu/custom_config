@@ -3,11 +3,12 @@ ZINIT="${HOME}"/.zinit/bin/zinit.zsh
 
 ## install zinit if not exist
 if [ ! -f "${ZINIT}" ]; then
-	if [ -x $(which git) ]; then
+	which git > /dev/null
+    if [ $? -eq 0 ]; then
 		mkdir -p "${HOME}"/.zinit && git clone https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
 	else
 		echo "ERROR: please install git before installation!!"
-		exit
+		return 404
 	fi
 fi
 
@@ -31,8 +32,8 @@ zinit wait lucid light-mode for \
 		OMZP::docker-compose/_docker-compose \
 	as"completion" nocompile id-as"git-completion/_git" is-snippet "${GH_RAW_URL}/git/git/master/contrib/completion/git-completion.zsh" \
 		zdharma-continuum/history-search-multi-word \
-	atload"fast-theme -q clean" \
-        zdharma-continuum/fast-syntax-highlighting \
+	atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)"  \
+        zsh-users/zsh-syntax-highlighting \
     atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,underline'; _zsh_autosuggest_start; zicompinit; zicdreplay" \
         zsh-users/zsh-autosuggestions
 

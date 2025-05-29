@@ -1,3 +1,5 @@
+# zsh only load .profile in login shell 
+
 # if running bash
 if [ -n "${BASH_VERSION}" ]; then
     # include .bashrc if it exists

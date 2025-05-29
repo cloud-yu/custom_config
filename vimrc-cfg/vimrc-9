@@ -255,7 +255,7 @@ set novisualbell    # 不要闪烁(不明白)
 
 
 # 根据文件后缀类型，设置不同的缩进设置（默认缩进4空格，tab替代空格)
-autocmd FileType json,xml,css set sw=2 ts=2 sts=2
+autocmd FileType json,xml,css,nix set sw=2 ts=2 sts=2
 
 #""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #""""新文件标题
@@ -273,7 +273,7 @@ def SetTitle()
 		call append(4, "# Created Time: " .. strftime("%c"))
 		call append(5, "#########################################################################")
 		if &filetype == 'sh'
-			call append(0, "#!/bin/bash")
+			call append(0, "#!/usr/bin/env bash")
 			call append(1, "#-*-coding utf-8 -*-")
 		else
 			call append(0, "#!/usr/bin/env python3")
