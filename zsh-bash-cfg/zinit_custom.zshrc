@@ -1,10 +1,17 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # init zinit
 ZINIT="${HOME}"/.zinit/bin/zinit.zsh
 
 ## install zinit if not exist
 if [ ! -f "${ZINIT}" ]; then
-	which git > /dev/null
-    if [ $? -eq 0 ]; then
+    # if git has been installed, clone zinit repo
+    if $(type git >/dev/null); then
 		mkdir -p "${HOME}"/.zinit && git clone https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
 	else
 		echo "ERROR: please install git before installation!!"
@@ -21,6 +28,7 @@ zinit snippet PZTM::completion
 
 local GH_RAW_URL='https://raw.githubusercontent.com'
 
+# zsh-users/zsh-syntax-highlighting should load before zsh-users/zsh-history-substring-search, accroding to the latter's github document
 zinit wait lucid light-mode for \
 	atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' atload"
 	zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
@@ -31,9 +39,9 @@ zinit wait lucid light-mode for \
 	as"completion" nocompile id-as"docker-completion/_docker" is-snippet "${GH_RAW_URL}/docker/cli/master/contrib/completion/zsh/_docker" \
 		OMZP::docker-compose/_docker-compose \
 	as"completion" nocompile id-as"git-completion/_git" is-snippet "${GH_RAW_URL}/git/git/master/contrib/completion/git-completion.zsh" \
-		zdharma-continuum/history-search-multi-word \
-	atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)"  \
-        zsh-users/zsh-syntax-highlighting \
+    atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)"  \
+        zsh-users/zsh-syntax-highlighting  \
+        zdharma-continuum/history-search-multi-word \
     atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,underline'; _zsh_autosuggest_start; zicompinit; zicdreplay" \
         zsh-users/zsh-autosuggestions
 
@@ -79,3 +87,10 @@ if [ -n "${TMUX}" ];then
     add-zsh-hook -Uz preexec refresh_tmux_env
 fi
 
+# if installed direnv, add direnv hook to the shell
+if $(type direnv >/dev/null); then
+    eval "$(direnv hook zsh)"
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
