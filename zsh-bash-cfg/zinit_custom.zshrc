@@ -38,7 +38,6 @@ zinit wait lucid light-mode for \
         zsh-users/zsh-completions \
 	as"completion" nocompile id-as"docker-completion/_docker" is-snippet "${GH_RAW_URL}/docker/cli/master/contrib/completion/zsh/_docker" \
 		OMZP::docker-compose/_docker-compose \
-	as"completion" nocompile id-as"git-completion/_git" is-snippet "${GH_RAW_URL}/git/git/master/contrib/completion/git-completion.zsh" \
     atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)"  \
         zsh-users/zsh-syntax-highlighting  \
         zdharma-continuum/history-search-multi-word \
