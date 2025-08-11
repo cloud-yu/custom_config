@@ -24,10 +24,6 @@ source "${ZINIT}"
 
 zinit ice depth"1"
 zinit light romkatv/powerlevel10k
-zinit ice id-as"pztm-completion" cloneonly nocompile
-zinit snippet PZTM::completion
-zinit ice pick"pztm-completion" blockf
-zinit light "${ZINIT[SNIPPETS_DIR]}/pztm-completion"
 
 local GH_RAW_URL='https://raw.githubusercontent.com'
 
@@ -48,6 +44,12 @@ zinit wait lucid light-mode blockf for \
         zsh-users/zsh-autosuggestions \
     atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)"  \
         zsh-users/zsh-syntax-highlighting 
+
+zinit ice id-as"pztm-completion" cloneonly nocompile
+zinit snippet PZTM::completion
+zinit ice pick"pztm-completion" blockf wait lucid
+zinit light "${ZINIT[SNIPPETS_DIR]}/pztm-completion"
+
 
 # set history
 HISTSIZE=10000
