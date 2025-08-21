@@ -35,21 +35,17 @@ zinit wait lucid light-mode blockf for \
     rupa/z \
     atpull'zi creinstall -q $(pwd); zi cclear -q' \
         zsh-users/zsh-completions \
-    as"completion" nocompile id-as"docker-completion/_docker" \
-        "${GH_RAW_URL}/docker/cli/master/contrib/completion/zsh/_docker" \
-    as"completion" nocompile \
-        OMZP::docker-compose/_docker-compose \
     zdharma-continuum/history-search-multi-word \
     atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,underline'; _zsh_autosuggest_start; zicompinit; zicdreplay" \
-        zsh-users/zsh-autosuggestions \
-    atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)"  \
-        zsh-users/zsh-syntax-highlighting 
+        zsh-users/zsh-autosuggestions
 
 zinit ice id-as"pztm-completion" cloneonly nocompile
 zinit snippet PZTM::completion
 zinit ice pick"pztm-completion" blockf wait lucid
 zinit light "${ZINIT[SNIPPETS_DIR]}/pztm-completion"
 
+zinit ice atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)" blockf lucid
+zinit light zsh-users/zsh-syntax-highlighting 
 
 # set history
 HISTSIZE=10000
