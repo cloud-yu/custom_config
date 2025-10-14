@@ -29,7 +29,14 @@ set nobackup
 #自动保存
 set autowrite
 set ruler                   # 打开状态栏标尺
-#set cursorline              # 突出显示当前行
+
+# 显示行号
+set number
+# 高亮当前行，为避免干扰，同时修改highlight风格，仅高亮行号
+set cursorline              # 突出显示当前行
+# 使用autocmd，在colorscheme加载后执行，避免被覆盖
+autocmd ColorScheme * hi clear CursorLine | hi CursorLineNr ctermbg=blue
+
 set magic                   # 设置魔术
 set guioptions-=T           # 隐藏工具栏
 set guioptions-=m           # 隐藏菜单栏
@@ -65,9 +72,6 @@ set expandtab
 
 # 在行和段开始处使用制表符
 set smarttab
-
-# 显示行号
-set number
 
 # 历史记录数
 set history=1000
