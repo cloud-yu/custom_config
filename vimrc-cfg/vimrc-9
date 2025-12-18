@@ -1,4 +1,13 @@
 vim9script
+
+# vim-plug 
+call plug#begin()
+Plug 'scrooloose/nerdtree'
+Plug 'chrisbra/Colorizer'
+call plug#end()
+
+g:colorizer_auto_filetype = 'css,html,toml,yaml'
+
 #""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 #实用设置
 #""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
