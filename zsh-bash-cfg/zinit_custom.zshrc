@@ -28,7 +28,7 @@ zinit light romkatv/powerlevel10k
 local GH_RAW_URL='https://raw.githubusercontent.com'
 
 # zsh-users/zsh-syntax-highlighting should load before zsh-users/zsh-history-substring-search, accroding to the latter's github document
-zinit wait lucid light-mode blockf for \
+zinit wait lucid light-mode depth"1" blockf for \
     atclone"dircolors -b > c.zsh" atpull'%atclone' \
     atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
         trapd00r/LS_COLORS \
@@ -36,7 +36,7 @@ zinit wait lucid light-mode blockf for \
     atpull'zi creinstall -q $(pwd); zi cclear -q' \
         zsh-users/zsh-completions \
     zdharma-continuum/history-search-multi-word \
-    atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,underline'; _zsh_autosuggest_start; zicdreplay; zicompinit" \
+    atload"ZSH_AUTOSUGGEST_STRATEGY=(history completion); ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8,underline'; _zsh_autosuggest_start; zicompinit; zicdreplay" \
         zsh-users/zsh-autosuggestions
 
 zinit ice id-as"pztm-completion" cloneonly nocompile
@@ -44,9 +44,12 @@ zinit snippet PZTM::completion
 zinit ice pick"pztm-completion" blockf wait lucid
 zinit light "${ZINIT[SNIPPETS_DIR]}/pztm-completion"
 
-zinit ice atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)" blockf lucid
-zinit light zdharma-continuum/fast-syntax-highlighting
+#zinit ice atload"ZSH_HIGHLIGHT_HIGHLIGHTERS+=(brackets pattern cursor line regexp)" depth"1" blockf lucid
 #zinit light zsh-users/zsh-syntax-highlighting 
+
+#zinit ice atload"fast-theme free >/dev/null 2>&1" depth"1" blockf lucid
+zinit ice depth"1"
+zinit light zdharma-continuum/fast-syntax-highlighting
 
 # set history
 HISTSIZE=10000
