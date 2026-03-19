@@ -37,3 +37,4 @@ done
 # set default EDITOR environment variable
 EDITOR=$(which vim)
 declare -xr EDITOR
+declare -x GPG_TTY=$(tty)
