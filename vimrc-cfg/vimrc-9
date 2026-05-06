@@ -170,7 +170,7 @@ def SetStatuslineHighlight()
     hi path ctermfg=21 ctermbg=214
     hi filetype ctermfg=3 ctermbg=99
     hi filemode ctermfg=3 ctermbg=88
-    hi fenc ctermfg=5 ctermbg=251
+    hi fenc ctermfg=5 ctermbg=black
     hi lineno ctermfg=0 ctermbg=87
     hi statusline ctermfg=12 ctermbg=236
     hi statuslinenc ctermfg=0 ctermbg=244
@@ -187,6 +187,7 @@ def InsertStatusLineColor(mode: string)
 	else
 		hi path ctermbg=grey
 	endif
+
 enddef
 
 au InsertEnter * InsertStatusLineColor(v:insertmode)
