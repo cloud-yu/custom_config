@@ -14,8 +14,8 @@ fi
 
 status_output=$(git -C "$pane_path" status --porcelain=v2 2>/dev/null)
 
-modified=$(echo "$status_output" | grep -cE '^1 .[MDRCUA] ' 2>/dev/null || echo 0)
-staged=$(echo "$status_output" | grep -cE '^1 [MDRCUA]. ' 2>/dev/null || echo 0)
+modified=$(echo "$status_output" | grep -cE '^[12] .[MDRCUA] ' 2>/dev/null || echo 0)
+staged=$(echo "$status_output" | grep -cE '^[12] [MDRCUA]. ' 2>/dev/null || echo 0)
 untracked=$(echo "$status_output" | grep -cE '^\? ' 2>/dev/null || echo 0)
 stashes=$(git -C "$pane_path" stash list 2>/dev/null | wc -l)
 
