@@ -12,7 +12,7 @@ ZINIT="${HOME}"/.zinit/bin/zinit.zsh
 if [ ! -f "${ZINIT}" ]; then
     # if git has been installed, clone zinit repo
     if $(type git >/dev/null); then
-		mkdir -p "${HOME}"/.zinit && git clone https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
+		mkdir -p "${HOME}"/.zinit && git clone --depth 1 https://github.com/zdharma-continuum/zinit.git "${HOME}"/.zinit/bin
 	else
 		echo "ERROR: please install git before installation!!"
 		return 404
@@ -22,7 +22,8 @@ fi
 # load zinit
 source "${ZINIT}"
 
-zinit ice depth"1"
+# remove zinit's alias, which conflict with z.lua and zoxide
+zinit ice depth"1" atinit"unalias zi zini zpl zplg"
 zinit light romkatv/powerlevel10k
 
 local GH_RAW_URL='https://raw.githubusercontent.com'
@@ -32,7 +33,6 @@ zinit wait lucid light-mode depth"1" blockf for \
     atclone"dircolors -b > c.zsh" atpull'%atclone' \
     atload"zstyle ':completion:*' list-colors \${(s.:.)LS_COLORS}" pick"c.zsh" nocompile:! \
         trapd00r/LS_COLORS \
-    rupa/z \
     atpull'zi creinstall -q $(pwd); zi cclear -q' \
         zsh-users/zsh-completions \
     zdharma-continuum/history-search-multi-word \
@@ -96,6 +96,11 @@ fi
 # if installed direnv, add direnv hook to the shell
 if $(type direnv >/dev/null); then
     eval "$(direnv hook zsh)"
+fi
+
+# if installed zoxide, generate shell configuration for zoxide
+if $(type zoxide >/dev/null); then
+    eval "$(zoxide init zsh)"
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
