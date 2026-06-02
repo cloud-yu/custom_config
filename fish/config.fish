@@ -8,7 +8,7 @@ if status is-interactive
     end
 
     ## define plugin list here
-    set -U FISH_PLUGINS "jorgebucaran/fisher" "IlanCosman/tide"
+    set -U FISH_PLUGINS "jorgebucaran/fisher" "ilancosman/tide"
 
     ## check and install missing plugins
     for plugin in $FISH_PLUGINS
