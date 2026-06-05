@@ -1,23 +1,37 @@
 vim9script
 
 # Install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+var config_home = $XDG_CONFIG_HOME
+if empty(config_home)
+  config_home = '~/.config'
+endif
+var vim_dir = config_home .. '/vim'
+var plug_autoload = expand(vim_dir .. '/autoload/plug.vim')
+if !filereadable(plug_autoload)
+  call mkdir(fnamemodify(plug_autoload, ':h'), 'p')
+  var dl = system('curl -fLo ' .. shellescape(plug_autoload)
+    \ .. ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+  if v:shell_error != 0
+    echom 'vim-plug download failed: ' .. dl
+  endif
 endif
 
-# Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) != 0
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
+if filereadable(plug_autoload)
+  exec 'set runtimepath^=' .. fnameescape(expand(vim_dir))
 
-# vim-plug 
-call plug#begin()
-Plug 'scrooloose/nerdtree'
-Plug 'chrisbra/Colorizer'
-Plug 'tpope/vim-sensible'
-Plug 'guns/xterm-color-table.vim'
-call plug#end()
+  # Run PlugInstall if there are missing plugins
+  autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) != 0
+    \| PlugInstall --sync | source $MYVIMRC
+  \| endif
+
+  # vim-plug
+  call plug#begin(vim_dir .. '/plugged')
+  Plug 'scrooloose/nerdtree'
+  Plug 'chrisbra/Colorizer'
+  Plug 'tpope/vim-sensible'
+  Plug 'guns/xterm-color-table.vim'
+  call plug#end()
+endif
 
 g:colorizer_auto_filetype = 'css,html,toml,yaml'
 
