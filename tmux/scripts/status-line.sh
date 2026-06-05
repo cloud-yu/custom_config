@@ -38,9 +38,9 @@ left_cond=(
 
 # -- Right side ---------------------------------------------------------------
 
-indicators_prefix=${indicators_prefix:-ℙ}     # U+2119
-indicators_mouse=${indicators_mouse:-↟}   # U+219F
-indicators_sync=${indicators_sync:-⚏}      # U+268F
+indicators_prefix=${indicators_prefix:-¶}     # U+00B6
+indicators_mouse=${indicators_mouse:-}   # U+F245
+indicators_sync=${indicators_sync:-}      # U+EA77
 
 username_text=$(id -u -n)
 root=$(if [ "$(id -u)" -eq 0 ]; then printf "!"; fi)

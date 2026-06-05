@@ -1,3 +1,29 @@
+" Install vim-plug if not found
+if !filereadable(expand('~/.vim/autoload/plug.vim'))
+    call mkdir(expand('~/.vim/autoload'), 'p')
+    let s:dl = system('curl -fLo ' . shellescape(expand('~/.vim/autoload/plug.vim')) . ' https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+    if v:shell_error != 0
+        echom 'vim-plug download failed: ' . s:dl
+    endif
+endif
+
+if filereadable(expand('~/.vim/autoload/plug.vim'))
+    " Run PlugInstall if there are missing plugins
+    autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) != 0
+        \| PlugInstall --sync | source $MYVIMRC
+    \| endif
+
+    " vim-plug
+    call plug#begin('~/.vim/plugged')
+    Plug 'scrooloose/nerdtree'
+    Plug 'chrisbra/Colorizer'
+    Plug 'tpope/vim-sensible'
+    Plug 'guns/xterm-color-table.vim'
+    call plug#end()
+endif
+
+let g:colorizer_auto_filetype = 'css,html,toml,yaml'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""实用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
