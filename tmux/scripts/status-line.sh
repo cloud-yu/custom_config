@@ -18,7 +18,8 @@ barrier_R=''  # U+E0B2 — left-pointing
 #   content = what to display (tmux format string)
 #   cond    = tmux condition (empty = always visible)
 
-git_cmd="bash ~/.config/tmux/scripts/tmux-git-status.sh"
+tmux_dir="${TMUX_DIR:-${HOME}/.config/tmux}"
+git_cmd="bash ${tmux_dir}/scripts/tmux-git-status.sh"
 
 # -- Left side ----------------------------------------------------------------
 
